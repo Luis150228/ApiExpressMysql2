@@ -1,0 +1,13 @@
+@api = http://localhost:4000/traslados
+
+
+GET {{api}}
+###
+
+GET {{api}}/R002561001
+###
+
+GET  {{api}}/count
+###
+
+POST  {{api}}/1
