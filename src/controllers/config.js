@@ -1,7 +1,11 @@
+import { config as dotenv } from 'dotenv';
+
+dotenv();
+// console.log(process.env.DBUSER);
 export const config = {
-	host: '92.249.44.156',
-	port: '3306',
-	user: 'u833518013_lrangelCatasys',
-	password: 'F3nixFree15',
-	database: 'u833518013_catasys',
+	host: process.env.DBHOST,
+	port: process.env.DBPORT,
+	user: process.env.DBUSER,
+	password: process.env.DBPASS,
+	database: process.env.DBSHEMA,
 };
