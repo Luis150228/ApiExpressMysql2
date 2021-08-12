@@ -4,7 +4,7 @@
 GET {{api}}
 ###Mostrar todos los traslados Activos
 
-GET {{api}}/1
+GET {{api}}/2
 ###Mostrar traslado por folio
 
 GET  {{api}}/count
