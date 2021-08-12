@@ -1,0 +1,36 @@
+@api = http://localhost:4000/traslados
+
+
+GET {{api}}
+###Mostrar todos los traslados Activos
+
+GET {{api}}/1
+###Mostrar traslado por folio
+
+GET  {{api}}/count
+###Contat todos los traslados activos
+
+POST {{api}}
+Content-Type: application/json; charset=utf-8
+
+{
+    "adquiriente" : "Rangel Jimenez Dannae",
+    "enajenante" : "Mendoza Rodriguez America",
+    "num_escr" : "150228",
+    "f_escr" : "2021-08-11",
+    "area" : "75"
+}
+###Insertar un traslado
+
+DELETE  {{api}}/1
+###Borrar uns traslado cambiando su clave
+
+PUT {{api}}/2
+Content-Type: application/json; charset=utf-8
+
+{
+  "adquiriente" : "Rangel Jimenez Derek",
+  "enajenante" : "Mendoza Rodriguez América",
+  "num_escr" : "150228",
+  "f_act" : "2021-08-12"
+}
