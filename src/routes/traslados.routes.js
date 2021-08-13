@@ -7,7 +7,7 @@ import {
 	setTraslado,
 	updateTraslado,
 } from '../controllers/traslados.controllers';
-import { verifyToken } from '../middlewares';
+import { authToken } from '../middlewares';
 
 const router = Router();
 
@@ -40,7 +40,11 @@ router.get('/count', getTrasladoCount);
  * get:
  * 	summary: Muestra el folio solicitado en base a su identificador
  */
-router.get('/:id', verifyToken, getTraslado);
+router.get(
+	'/:id',
+	[authToken.verifyToken, authToken.isGod, authToken.isAdmin],
+	getTraslado
+);
 
 /**
  * @swagger
@@ -48,7 +52,11 @@ router.get('/:id', verifyToken, getTraslado);
  * post:
  *	summary: Crea en la base de datos un nuevo traslado
  */
-router.post('/', verifyToken, setTraslado);
+router.post(
+	'/',
+	[authToken.verifyToken, authToken.isGod, authToken.isAdmin],
+	setTraslado
+);
 
 /**
  * @swagger
@@ -56,7 +64,11 @@ router.post('/', verifyToken, setTraslado);
  * delete:
  * 	summary: En base al ID cancela el traslado actualizando un parametro
  */
-router.delete('/:id', verifyToken, deleteTraslado);
+router.delete(
+	'/:id',
+	[authToken.verifyToken, authToken.isGod, authToken.isAdmin],
+	deleteTraslado
+);
 
 /**
  * @swagger
@@ -64,6 +76,10 @@ router.delete('/:id', verifyToken, deleteTraslado);
  * put:
  * 	summary: actualiza el traslado en diferentes campos en base a su id
  */
-router.put('/:id', verifyToken, updateTraslado);
+router.put(
+	'/:id',
+	[authToken.verifyToken, authToken.isGod, authToken.isAdmin],
+	updateTraslado
+);
 
 export default router;

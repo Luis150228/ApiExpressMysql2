@@ -1,3 +1,3 @@
-import { verifyToken } from './authtoken.mid';
+import * as authToken from './authtoken.mid';
 
-export { verifyToken };
+export { authToken };
