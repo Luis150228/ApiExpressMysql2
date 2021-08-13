@@ -11,26 +11,29 @@ GET  {{api}}/count
 ###Contat todos los traslados activos
 
 POST {{api}}
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
 Content-Type: application/json; charset=utf-8
 
 {
-    "adquiriente" : "Rangel Jimenez Dannae",
-    "enajenante" : "Mendoza Rodriguez America",
-    "num_escr" : "150228",
-    "f_escr" : "2021-08-11",
-    "area" : "75"
+    "adquiriente" : "Hatake Kakashi",
+    "enajenante" : "Hinata Hyūga",
+    "num_escr" : "84471",
+    "f_escr" : "2021-08-12",
+    "area" : "82"
 }
 ###Insertar un traslado
 
-DELETE  {{api}}/1
+DELETE  {{api}}/2
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
 ###Borrar uns traslado cambiando su clave
 
 PUT {{api}}/2
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
 Content-Type: application/json; charset=utf-8
 
 {
-  "adquiriente" : "Rangel Jimenez Derek",
-  "enajenante" : "Mendoza Rodriguez América",
-  "num_escr" : "150228",
-  "f_act" : "2021-08-12"
+  "adquiriente" : "Yahami Light",
+  "enajenante" : "Stark Tony",
+  "num_escr" : "851209",
+  "f_act" : "2021-08-10"
 }

@@ -7,6 +7,7 @@ import {
 	setTraslado,
 	updateTraslado,
 } from '../controllers/traslados.controllers';
+import { verifyToken } from '../middlewares';
 
 const router = Router();
 
@@ -39,7 +40,7 @@ router.get('/count', getTrasladoCount);
  * get:
  * 	summary: Muestra el folio solicitado en base a su identificador
  */
-router.get('/:id', getTraslado);
+router.get('/:id', verifyToken, getTraslado);
 
 /**
  * @swagger
@@ -47,7 +48,7 @@ router.get('/:id', getTraslado);
  * post:
  *	summary: Crea en la base de datos un nuevo traslado
  */
-router.post('/', setTraslado);
+router.post('/', verifyToken, setTraslado);
 
 /**
  * @swagger
@@ -55,7 +56,7 @@ router.post('/', setTraslado);
  * delete:
  * 	summary: En base al ID cancela el traslado actualizando un parametro
  */
-router.delete('/:id', deleteTraslado);
+router.delete('/:id', verifyToken, deleteTraslado);
 
 /**
  * @swagger
@@ -63,6 +64,6 @@ router.delete('/:id', deleteTraslado);
  * put:
  * 	summary: actualiza el traslado en diferentes campos en base a su id
  */
-router.put('/:id', updateTraslado);
+router.put('/:id', verifyToken, updateTraslado);
 
 export default router;

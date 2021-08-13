@@ -4,12 +4,22 @@ POST {{api}}/signup
 Content-Type: application/json; charset=utf-8
 
 {
-  "usrname": "Natalie Dannae",
-  "username": "nrangel",
-  "pass": "fortaleza",
-  "userlevel": "1", 
+  "usrname": "Derek",
+  "username": "drangel",
+  "pass": "curiosidad",
+  "userlevel": "user", 
   "image": "1231",
   "status": "1",
   "area": "Desarrollo"
 }
 ###Insertar un usuario
+
+POST {{api}}/signin
+Content-Type: application/json; charset=utf-8
+
+{
+  "username": "icaro",
+  "pass": "aprendizaje"
+}
+###loggear un usuario
+s

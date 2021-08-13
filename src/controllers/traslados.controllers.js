@@ -55,7 +55,7 @@ export const deleteTraslado = async (req, res) => {
 		[req.params.id]
 	);
 	// console.log(result);
-	res.sendStatus(204);
+	res.sendStatus(202);
 };
 
 export const updateTraslado = async (req, res) => {
@@ -65,5 +65,5 @@ export const updateTraslado = async (req, res) => {
 		[req.body, req.params.id]
 	);
 	// console.log(result);
-	res.sendStatus(204);
+	res.sendStatus(202);
 };
