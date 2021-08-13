@@ -9,6 +9,7 @@ export const getTraslados = async (req, res) => {
 	// res.send('Sistema de traslados');
 	res.json(rows);
 };
+
 export const getTraslado = async (req, res) => {
 	const connection = await connect();
 	const [rows] = await connection.query(

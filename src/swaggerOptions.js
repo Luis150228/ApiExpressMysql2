@@ -6,5 +6,5 @@ export const options = {
 			version: '0.1.0',
 		},
 	},
-	apis: ['./routes/traslados.js'],
+	apis: ['./routes/traslados.routes.js'],
 };

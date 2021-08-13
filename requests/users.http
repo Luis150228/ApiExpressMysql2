@@ -1,0 +1,30 @@
+@api = http://localhost:3000/api/users
+
+POST {{api}}
+Content-Type: application/json; charset=utf-8
+
+{
+  "usrname": "Natalie Dannae",
+  "username": "nrangel",
+  "pass": "fortaleza",
+  "userlevel": "1", 
+  "image": "1231",
+  "status": "1",
+  "area": "Desarrollo"
+}
+###Insertar un usuario
+
+GET {{api}}
+###Mostrar todos los usuarios Activos
+
+
+DELETE {{api}}/601
+###Desactivar usuarios
+
+
+
+
+
+
+
+

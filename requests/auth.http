@@ -1,0 +1,15 @@
+@api = http://localhost:3000/api/auth
+
+POST {{api}}/signup
+Content-Type: application/json; charset=utf-8
+
+{
+  "usrname": "Natalie Dannae",
+  "username": "nrangel",
+  "pass": "fortaleza",
+  "userlevel": "1", 
+  "image": "1231",
+  "status": "1",
+  "area": "Desarrollo"
+}
+###Insertar un usuario
