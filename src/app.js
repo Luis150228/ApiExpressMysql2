@@ -1,32 +1,60 @@
+import createError from 'http-errors';
 import express from 'express';
+import path from 'path';
+import cookieParser from 'cookie-parser';
+import logger from 'morgan';
 import cors from 'cors';
-import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
 import { options } from './swaggerOptions';
 import trasladosRoutes from './routes/traslados.routes'; ///trasladosRoutes fue creado aleatoriamente
 import usersRoutes from './routes/user.routes';
 import authRoutes from './routes/auth.routes';
+import indexRoutes from './routes/index.routes';
 
 const specs = swaggerJSDoc(options);
 
 const app = express();
 
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-app.get('/', (req, res) => {
-	res.json({
-		author: 'Rangel Diaz Luis Fernando',
-		name: 'Sistema de Traslados',
-		version: '0.1.0',
-	});
-});
+app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// app.get('/', (req, res) => {
+// 	res.json({
+// 		author: 'Rangel Diaz Luis Fernando',
+// 		name: 'Sistema de Traslados',
+// 		version: '0.1.0',
+// 	});
+// });
+app.use('/', indexRoutes);
 app.use('/api/traslados', trasladosRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/auth', authRoutes);
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
+
+//////////////////////////////// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+	next(createError(404));
+});
+
+// error handler
+app.use(function (err, req, res, next) {
+	// set locals, only providing error in development
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+	// render the error page
+	res.status(err.status || 500);
+	res.render('error');
+});
 
 export default app;
