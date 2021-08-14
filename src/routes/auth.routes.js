@@ -1,8 +1,9 @@
 import { Router } from 'express';
 const router = Router();
-import { authUser, singIn, singUp, usrExist } from '../controllers/auth.controllers';
+import { authUser, singIn, singUp } from '../controllers/auth.controllers';
+import { authToken } from '../middlewares';
 
-router.post('/signup', singUp);
+router.post('/signup', [authToken.isAdmin], singUp);
 router.post('/signin', singIn);
 
 router.post('/', authUser);

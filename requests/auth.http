@@ -18,8 +18,8 @@ POST {{api}}/signin
 Content-Type: application/json; charset=utf-8
 
 {
-  "username": "icaro",
-  "pass": "aprendizaje"
+  "username": "lrangel",
+  "pass": "aprender"
 }
 ###loggear un usuario
 s

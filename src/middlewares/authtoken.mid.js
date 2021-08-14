@@ -1,47 +1,14 @@
-import { connect } from '../controllers/dataBase';
-import jsntoken from 'jsonwebtoken';
-import secrword from '../secrWord';
-
-const trasladeToken = async (headerToken) => {
-	const connection = await connect();
-
-	if (!headerToken) return res.status(403).json({ menssage: 'No proporciono el Token' });
-
-	const unToken = jsntoken.verify(headerToken, secrword.SECRET);
-	// console.log(unToken.id);
-
-	/**Validar si el usuario dentro del token existe */
-	const [usrExist] = await connection.query(
-		'SELECT id, COUNT(username) as total from t_users WHERE id = ?',
-		[unToken.id]
-	);
-
-	return usrExist[0]['id'];
-};
+import { trasladeToken, idonToken, rolToken } from './function.mid';
 
 export const verifyToken = async (req, res, next) => {
 	try {
-		const connection = await connect();
 		const token = req.headers['x-access-token'];
-		// console.log(token);
-
-		if (!token) return res.status(403).json({ menssage: 'No proporciono el Token' });
-
-		const unToken = jsntoken.verify(token, secrword.SECRET);
-		// console.log(unToken.id);
-
-		/**Validar si el usuario dentro del token existe */
-		const [usrExist] = await connection.query(
-			'SELECT COUNT(username) as total from t_users WHERE id = ?',
-			[unToken.id]
-		);
-
+		const idToken = await trasladeToken(token);
+		// console.log('Existe el id Toke: ', idToken, token);
 		/**En caso de que el usuario exite */
-		if (usrExist[0]['total'] == 0)
+		if (idToken == 0)
 			return res.status(400).json({ menssage: 'Usuario sin permisos o inexistente' });
-
-		console.log(usrExist[0]['total']);
-
+		// console.log('Existe el id Toke: ', idToken);
 		next();
 	} catch (error) {
 		return res.status(401).json({ menssage: 'No autorizado' });
@@ -49,32 +16,37 @@ export const verifyToken = async (req, res, next) => {
 };
 
 export const isGod = async (req, res, next) => {
-	try {
-		const connection = await connect();
-		const token = req.headers['x-access-token'];
-		// console.log(token);
+	const token = req.headers['x-access-token'];
+	const rol = await rolToken(token);
 
-		if (!token) return res.status(403).json({ menssage: 'No proporciono el Token' });
-
-		const unToken = jsntoken.verify(token, secrword.SECRET);
-		// console.log(unToken.id);
-
-		/**Validar si el usuario dentro del token existe */
-		const [usrExist] = await connection.query(
-			'SELECT COUNT(username) as total from t_users WHERE id = ?',
-			[unToken.id]
-		);
-
-		/**En caso de que el usuario exite */
-		if (usrExist[0]['total'] == 0)
-			return res.status(400).json({ menssage: 'Usuario sin permisos o inexistente' });
-
-		console.log(usrExist[0]['total']);
-
-		next();
-	} catch (error) {
-		return res.status(401).json({ menssage: 'No autorizado' });
-	}
+	if (rol !== 'god') return res.json({ menssage: 'No soy un dios' });
+	// console.log('IF Rol de usuario: ', rol);
+	next();
 };
 
-export const isAdmin = async (req, res, next) => {};
+export const isAdmin = async (req, res, next) => {
+	const token = req.headers['x-access-token'];
+	const rol = await rolToken(token);
+
+	if (rol !== 'god' || rol !== 'admin')
+		return res.json({ menssage: 'No es un Administrador' });
+	next();
+};
+
+export const isUser = async (req, res, next) => {
+	const token = req.headers['x-access-token'];
+	const rol = await rolToken(token);
+
+	if (rol !== 'god' || rol !== 'admin' || rol !== 'user')
+		return res.json({ menssage: 'No puede realizar ninguna modificacion' });
+	next();
+};
+
+export const isConsult = async (req, res, next) => {
+	const token = req.headers['x-access-token'];
+	const rol = await rolToken(token);
+
+	if (rol !== 'god' || rol !== 'admin' || rol !== 'user' || rol !== 'consult')
+		return res.json({ menssage: 'No puede realizar ninguna consulta' });
+	next();
+};
