@@ -3,10 +3,10 @@ import cors from 'cors';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUI from 'swagger-ui-express';
-import { options } from '../swaggerOptions';
-import trasladosRoutes from '../routes/traslados.routes'; ///trasladosRoutes fue creado aleatoriamente
-import usersRoutes from '../routes/user.routes';
-import authRoutes from '../routes/auth.routes';
+import { options } from './swaggerOptions';
+import trasladosRoutes from './routes/traslados.routes'; ///trasladosRoutes fue creado aleatoriamente
+import usersRoutes from './routes/user.routes';
+import authRoutes from './routes/auth.routes';
 
 const specs = swaggerJSDoc(options);
 
