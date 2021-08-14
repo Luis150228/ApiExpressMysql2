@@ -1,34 +1,43 @@
 @api = http://localhost:3000/api/traslados
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
 
+@tokengod = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjAyLCJpYXQiOjE2Mjg4OTgyNDUsImV4cCI6MTYyODk4NDY0NX0.KzvC5UYKhFRhXE6GJRNDVTTFNW_Cu2C1CxKUJ72bBJ8
+
+@tokenusr = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
+
+@tokencns = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjAzLCJpYXQiOjE2Mjg5MDExMTEsImV4cCI6MTYyODk4NzUxMX0.5qWKt5rRroDXXaa2NxCFtPULKbg-lcAjNL373K0Tz-k
 
 GET {{api}}
+x-access-token: {{token}}
 ###Mostrar todos los traslados Activos
 
-GET {{api}}/2
+GET {{api}}/1
+x-access-token: {{token}}
 ###Mostrar traslado por folio
 
 GET  {{api}}/count
+x-access-token: {{token}}
 ###Contat todos los traslados activos
 
 POST {{api}}
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjAyLCJpYXQiOjE2Mjg4OTgyNDUsImV4cCI6MTYyODk4NDY0NX0.KzvC5UYKhFRhXE6GJRNDVTTFNW_Cu2C1CxKUJ72bBJ8
+x-access-token: {{token}}
 Content-Type: application/json; charset=utf-8
 
 {
-    "adquiriente" : "Rikudō Sennin",
-    "enajenante" : "Danzō Shimura",
-    "num_escr" : "66466",
-    "f_escr" : "2021-08-8",
-    "area" : "82"
+    "adquiriente" : "Zabuza Momochi",
+    "enajenante" : "Kisame Hoshigaki",
+    "num_escr" : "650065",
+    "f_escr" : "2021-08-10",
+    "area" : "90"
 }
 ###Insertar un traslado
 
 DELETE  {{api}}/2
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
+x-access-token: {{token}}
 ###Borrar uns traslado cambiando su clave
 
 PUT {{api}}/2
-x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjA0LCJpYXQiOjE2Mjg4ODM0NjYsImV4cCI6MTYyODk2OTg2Nn0.koSPUx8qUVEMxkfmk00i8O6g1rZLpPtpl1reiDjF04Q
+x-access-token: {{token}}
 Content-Type: application/json; charset=utf-8
 
 {

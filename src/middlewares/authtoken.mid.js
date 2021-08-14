@@ -3,15 +3,15 @@ import { trasladeToken, idonToken, rolToken } from './function.mid';
 export const verifyToken = async (req, res, next) => {
 	try {
 		const token = req.headers['x-access-token'];
-		const idToken = await trasladeToken(token);
-		// console.log('Existe el id Toke: ', idToken, token);
-		/**En caso de que el usuario exite */
-		if (idToken == 0)
-			return res.status(400).json({ menssage: 'Usuario sin permisos o inexistente' });
-		// console.log('Existe el id Toke: ', idToken);
-		next();
+		const eToken = await trasladeToken(token);
+		/**Valida la existencia del usuario */
+		eToken == 0
+			? res
+					.status(400)
+					.json({ menssage: 'Verify Token: Usuario sin permisos o inexistente' })
+			: next();
 	} catch (error) {
-		return res.status(401).json({ menssage: 'No autorizado' });
+		return res.status(401).json({ menssage: 'Verify Token: No autorizado o sin token' });
 	}
 };
 
@@ -28,25 +28,31 @@ export const isAdmin = async (req, res, next) => {
 	const token = req.headers['x-access-token'];
 	const rol = await rolToken(token);
 
-	if (rol !== 'god' || rol !== 'admin')
-		return res.json({ menssage: 'No es un Administrador' });
-	next();
+	rol == 'god' || rol == 'admin'
+		? next()
+		: res.status(401).json({
+				menssage: `Se requiere permisos de Administrador su nivel es de ${rol}`,
+		  });
 };
 
 export const isUser = async (req, res, next) => {
 	const token = req.headers['x-access-token'];
 	const rol = await rolToken(token);
 
-	if (rol !== 'god' || rol !== 'admin' || rol !== 'user')
-		return res.json({ menssage: 'No puede realizar ninguna modificacion' });
-	next();
+	rol == 'god' || rol == 'admin' || rol == 'user'
+		? next()
+		: res.status(401).json({
+				menssage: `No puede realizar ninguna modificacion su nivel es de ${rol}`,
+		  });
 };
 
 export const isConsult = async (req, res, next) => {
 	const token = req.headers['x-access-token'];
 	const rol = await rolToken(token);
 
-	if (rol !== 'god' || rol !== 'admin' || rol !== 'user' || rol !== 'consult')
-		return res.json({ menssage: 'No puede realizar ninguna consulta' });
-	next();
+	rol == 'god' || rol == 'admin' || rol == 'user' || rol == 'consult'
+		? next()
+		: res.status(401).json({
+				menssage: `You cannot check your username is ${rol}`,
+		  });
 };

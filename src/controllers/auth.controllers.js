@@ -12,16 +12,23 @@ const passValidate = (pswNow, pswSave) => {
 	return bcrypt.compareSync(pswNow, pswSave);
 };
 
+const usrExist = async (user) => {
+	const connection = await connect();
+	const [rows] = await connection.query(
+		'SELECT COUNT(username) as total from t_users WHERE username = ?',
+		[user]
+	);
+
+	return rows[0]['total'];
+};
+
 /**Crear un usuario y validar que no se repita*/
 export const singUp = async (req, res) => {
 	const connection = await connect();
 	const { usrname, username, pass, userlevel, image, status, area } = await req.body;
-	const [rows] = await connection.query(
-		'SELECT COUNT(username) as total from t_users WHERE username = ?',
-		[username]
-	);
+	const asExist = await usrExist(username);
 
-	if ((rows[0]['total'] = 0)) {
+	if (asExist != 0) {
 		res.json({ menssage: 'El usuario ya existe' });
 	} else {
 		const psw = await passHash(pass);
@@ -34,8 +41,7 @@ export const singUp = async (req, res) => {
 			expiresIn: 86400,
 		});
 
-		console.log(token);
-		res.status(200).json({
+		res.json({
 			menssage: 'Usuario Registrado',
 			id: result.insertId,
 			token: token,
