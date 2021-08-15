@@ -10,15 +10,15 @@ import { options } from './swaggerOptions';
 import trasladosRoutes from './routes/traslados.routes'; ///trasladosRoutes fue creado aleatoriamente
 import usersRoutes from './routes/user.routes';
 import authRoutes from './routes/auth.routes';
-import indexRoutes from './routes/index.routes';
+// import indexRoutes from './routes/index.routes';
 
 const specs = swaggerJSDoc(options);
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 app.use(cors());
 app.use(logger('dev'));
@@ -27,14 +27,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.get('/', (req, res) => {
-// 	res.json({
-// 		author: 'Rangel Diaz Luis Fernando',
-// 		name: 'Sistema de Traslados',
-// 		version: '0.1.0',
-// 	});
-// });
-app.use('/', indexRoutes);
+app.get('/', (req, res) => {
+	res.json({
+		author: 'Rangel Diaz Luis Fernando',
+		name: 'Sistema de Traslados',
+		version: '0.1.0',
+	});
+});
+// app.use('/', indexRoutes);
 app.use('/api/traslados', trasladosRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/auth', authRoutes);
