@@ -1,6 +1,6 @@
 import app from './app';
 // import './controllers/dataBase';
 
-app.listen(3001);
+app.listen(3000);
 
-console.log('Server on port 3001');
+console.log('Server on port 3000');

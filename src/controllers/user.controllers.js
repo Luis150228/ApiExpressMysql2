@@ -1,29 +1,62 @@
 import { connect } from './dataBase';
+import bcrypt from 'bcryptjs';
+import jsntoken from 'jsonwebtoken';
+import secrword from '../secrWord';
+
+
+/////Fuciones
+
+const passHash = async (textPass) => {
+	const level = await bcrypt.genSalt(9);
+	return await bcrypt.hash(textPass, level);
+};
+
+const passValidate = (pswNow, pswSave) => {
+	return bcrypt.compareSync(pswNow, pswSave);
+};
+
+const usrExist = async (user) => {
+	const connection = await connect();
+	const [rows] = await connection.query(
+		'SELECT COUNT(username) as total from t_users WHERE username = ?',
+		[user]
+	);
+
+	return rows[0]['total'];
+};
+
+
+//////////Controladores
 
 export const createUser = async (req, res) => {
 	const connection = await connect();
-	const [result] = await connection.query(
-		'INSERT INTO t_users (name, username, password, user_level, image, status, area) VALUES (?, ?, ?, ?, ?, ?, ?)',
-		[
-			req.body.usrname,
-			req.body.username,
-			req.body.pass,
-			req.body.userlevel,
-			req.body.image,
-			req.body.status,
-			req.body.area,
-		]
-	);
-	// console.log(result);
-	res.status(200).json({
-		id: result.insertId,
-		...req.body,
-	});
+	const { usrname, username, pass, userlevel, image, status, area } = await req.body;
+	const asExist = await usrExist(username);
+
+	if (asExist != 0) {
+		res.json({ menssage: 'El usuario ya existe' });
+	} else {
+		const psw = await passHash(pass);
+		const [result] = await connection.query(
+			'INSERT INTO t_users (name, username, password, user_level, image, status, area) VALUES (?, ?, ?, ?, ?, ?, ?)',
+			[usrname, username, psw, userlevel, image, status, area]
+		);
+
+		const token = jsntoken.sign({ id: result.insertId }, secrword.SECRET, {
+			expiresIn: 86400,
+		});
+
+		res.json({
+			menssage: 'Usuario Registrado',
+			id: result.insertId,
+			token: token,
+		});
+	}
 };
 
 export const getUsers = async (req, res) => {
 	const connection = await connect();
-	const [rows] = await connection.query('SELECT * FROM t_users where status = 1');
+	const [rows] = await connection.query('SELECT id, name, username, user_level, image, status, area, last_login, f_usr_create FROM t_users where status = 1');
 	// console.log(rows);
 	// res.send('Sistema de traslados');
 	res.json(rows);
