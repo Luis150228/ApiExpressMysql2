@@ -1,6 +1,7 @@
 import app from './app';
 // import './controllers/dataBase';
-const port = 3000
-app.listen(port);
+app.set('port', process.env.PORT || 3000);
 
-console.log(`Server on port ${port}`);
+app.listen(app.get('port'));
+
+console.log(`Server on port ${app.listen(app.get('port'))}`);
